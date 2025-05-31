@@ -44,7 +44,7 @@ class GamesController extends Controller
      */
     public function show(string $id)
     {
-        $game = Game::find($id);
+        $game = Game::findOrFail($id);
         return response()->json($game);
     }
 
@@ -54,6 +54,7 @@ class GamesController extends Controller
     public function update(Request $request, string $id)
     {
 
+        $game = Game::findOrFail($id);
         $validated = $request->validate([
 
             'name' => 'required|string|max:255',
@@ -64,8 +65,8 @@ class GamesController extends Controller
 
         ]);
 
-        $game = Game::find($id);
-        $game->update($validate);
+        
+        $game->update($validated);
         return response()->json($game,200);
 
     }
@@ -76,7 +77,7 @@ class GamesController extends Controller
     public function destroy(string $id)
     {
 
-        $game = Game::find($id);
+        $game = Game::findOrFail($id);
         $game->delete();
         return response()->json(['message' => 'Game deleted successfully'],200);
 
