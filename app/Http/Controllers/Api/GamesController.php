@@ -64,6 +64,7 @@ class GamesController extends Controller
 
         ]);
 
+        $game = Game::find($id);
         $game->update($validate);
         return response()->json($game,200);
 
